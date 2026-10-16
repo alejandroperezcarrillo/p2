@@ -120,6 +120,16 @@ public class Matriz {
     }
 
     /**
+     * Versión estática que devuelve la matriz traspuesta de la dada.
+     */
+    public static Matriz traspuesta(Matriz m) {
+        if (m == null) {
+            return null;
+        }
+        return m.traspuesta();
+    }
+
+    /**
      * Devuelve una representación textual de la matriz.
      */
     @Override
