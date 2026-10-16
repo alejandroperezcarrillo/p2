@@ -97,6 +97,13 @@ public class Matriz {
 
         return new Matriz(resultado);
     }
+    // Versión estática que suma dos matrices recibidas como argumento
+    public static Matriz sumar(Matriz m1, Matriz m2) {
+        if (m1 == null || m2 == null) {
+            return null;
+        }
+        return m1.sumar(m2);
+    }
 
     /**
      * Devuelve una representación textual de la matriz.

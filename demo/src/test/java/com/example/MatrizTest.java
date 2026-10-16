@@ -62,6 +62,46 @@ public class MatrizTest {
         assertNull(primera.sumar(null));
     }
 
+    @Test
+    public void sumarEstaticoSumaMatricesDeIgualDimension() {
+        Matriz primera = new Matriz(new double[][] {
+            { 1.0, 2.0 },
+            { 3.0, 4.0 }
+        });
+        Matriz segunda = new Matriz(new double[][] {
+            { 5.0, 6.0 },
+            { 7.0, 8.0 }
+        });
+
+        Matriz resultado = Matriz.sumar(primera, segunda);
+
+        assertArrayEquals(new int[] { 2, 2 }, resultado.getDimension());
+        assertEquals(6.0, resultado.getElemento(0, 0), 1e-9);
+        assertEquals(8.0, resultado.getElemento(0, 1), 1e-9);
+        assertEquals(10.0, resultado.getElemento(1, 0), 1e-9);
+        assertEquals(12.0, resultado.getElemento(1, 1), 1e-9);
+    }
+
+    @Test
+    public void sumarEstaticoDevuelveNullSiLasDimensionesSonDistintas() {
+        Matriz primera = new Matriz(new double[][] { { 1.0, 2.0 } });
+        Matriz segunda = new Matriz(new double[][] {
+            { 3.0 },
+            { 4.0 }
+        });
+
+        assertNull(Matriz.sumar(primera, segunda));
+    }
+
+    @Test
+    public void sumarEstaticoDevuelveNullSiAlgunaMatrizEsNull() {
+        Matriz matriz = new Matriz(new double[][] { { 1.0 } });
+
+        assertNull(Matriz.sumar(null, matriz));
+        assertNull(Matriz.sumar(matriz, null));
+        assertNull(Matriz.sumar(null, null));
+    }
+
     /*
      * Comprobamos el caso más sencillo:
      * el constructor recibe una matriz rectangular.
