@@ -82,6 +82,22 @@ public class Matriz {
         return datos[fila][columna];
     }
 
+    // Suma la matriz actual con otra pasada como argumento
+    public Matriz sumar(Matriz otra) {
+        if (otra == null || this.filas != otra.filas || this.columnas != otra.columnas) {
+            return null;
+        }
+
+        double[][] resultado = new double[filas][columnas];
+        for (int i = 0; i < filas; i++) {
+            for (int j = 0; j < columnas; j++) {
+                resultado[i][j] = this.datos[i][j] + otra.datos[i][j];
+            }
+        }
+
+        return new Matriz(resultado);
+    }
+
     /**
      * Devuelve una representación textual de la matriz.
      */

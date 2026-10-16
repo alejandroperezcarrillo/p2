@@ -2,6 +2,7 @@ package com.example;
 
 import static org.junit.Assert.assertArrayEquals;
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNull;
 import org.junit.Test;
 
 
@@ -9,6 +10,57 @@ import org.junit.Test;
  * Pruebas de los constructores de Matriz.
  */
 public class MatrizTest {
+
+    @Test
+    public void sumarSumaMatricesDeIgualDimension() {
+        Matriz primera = new Matriz(new double[][] {
+            { 1.5, -2.0 },
+            { 3.0, 4.25 }
+        });
+        Matriz segunda = new Matriz(new double[][] {
+            { 2.5, 5.0 },
+            { -1.0, 0.75 }
+        });
+
+        Matriz resultado = primera.sumar(segunda);
+
+        assertArrayEquals(new int[] { 2, 2 }, resultado.getDimension());
+        assertEquals(4.0, resultado.getElemento(0, 0), 1e-9);
+        assertEquals(3.0, resultado.getElemento(0, 1), 1e-9);
+        assertEquals(2.0, resultado.getElemento(1, 0), 1e-9);
+        assertEquals(5.0, resultado.getElemento(1, 1), 1e-9);
+    }
+
+    @Test
+    public void sumarNoModificaLasMatricesOriginales() {
+        Matriz primera = new Matriz(new double[][] { { 1.0, 2.0 } });
+        Matriz segunda = new Matriz(new double[][] { { 3.0, 4.0 } });
+
+        primera.sumar(segunda);
+
+        assertEquals(1.0, primera.getElemento(0, 0), 1e-9);
+        assertEquals(2.0, primera.getElemento(0, 1), 1e-9);
+        assertEquals(3.0, segunda.getElemento(0, 0), 1e-9);
+        assertEquals(4.0, segunda.getElemento(0, 1), 1e-9);
+    }
+
+    @Test
+    public void sumarDevuelveNullSiLasDimensionesSonDistintas() {
+        Matriz primera = new Matriz(new double[][] { { 1.0, 2.0 } });
+        Matriz segunda = new Matriz(new double[][] {
+            { 3.0 },
+            { 4.0 }
+        });
+
+        assertNull(primera.sumar(segunda));
+    }
+
+    @Test
+    public void sumarDevuelveNullSiLaOtraMatrizEsNull() {
+        Matriz primera = new Matriz(new double[][] { { 1.0 } });
+
+        assertNull(primera.sumar(null));
+    }
 
     /*
      * Comprobamos el caso más sencillo:
