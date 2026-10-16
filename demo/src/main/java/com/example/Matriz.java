@@ -106,6 +106,20 @@ public class Matriz {
     }
 
     /**
+     * Devuelve la matriz traspuesta de la matriz dada
+     */
+    public Matriz traspuesta() {
+        double[][] resultado = new double[columnas][filas];
+        for (int i = 0; i < filas; i++) {
+            for (int j = 0; j < columnas; j++) {
+                resultado[j][i] = this.datos[i][j];
+            }
+        }
+
+        return new Matriz(resultado);
+    }
+
+    /**
      * Devuelve una representación textual de la matriz.
      */
     @Override
