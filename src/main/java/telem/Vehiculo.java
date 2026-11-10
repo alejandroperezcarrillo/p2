@@ -6,7 +6,7 @@ import org.json.JSONObject;
  * Modela un vehículo con matrícula, categoría, año y disponibilidad.
  * La matrícula debe ser única para cada vehículo.
  * Vehiculo
- */
+ **/
 public abstract class Vehiculo {
 
     private String matricula;
@@ -45,4 +45,15 @@ public abstract class Vehiculo {
         return new JSONObject(this).toString();
     }
 
+    /**
+    * En serialización/deserialización: para obtener el tipo de vehículo (clase) del objeto.
+    * @return El tipo de vehículo (sub-clase) del objeto.
+    */
+    public abstract String getTipo();
+
+    /**
+     *Calcula el precio base diario del vehículo según su categoría y tipo.
+     *@return precio base diario del vehículo.
+     */
+    public abstract int getPrecioBase();
 }
