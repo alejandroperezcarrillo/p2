@@ -47,4 +47,11 @@ public class VehiculoIndustrial extends Vehiculo {
         return precioBase;
     }
 
+    public VehiculoIndustrial(String jsonString) {
+        super(jsonString);
+        JSONObject json = new JSONObject(jsonString);
+        this.capacidadCarga = json.getInt("capacidadCarga");
+        this.numeroEjes = json.getInt("numeroEjes");
+    }
+
 }

@@ -79,6 +79,20 @@ public class Alquiler {
         return calculador.calcularPrecioAlquiler(fechaInicio, fechaFin, vehiculo);
     }
 
+    public Alquiler(String jsonString) {
+    org.json.JSONObject json = new org.json.JSONObject(jsonString);
+    
+    // Deserializamos el cliente
+    this.cliente = new Cliente(json.getJSONObject("cliente").toString());
+    
+    // Deserializamos el vehículo
+    this.vehiculo = FactoriaVehiculos.getVehiculo(json.getJSONObject("vehiculo").toString());
+    
+    // Deserializamos las fechas
+    this.fechaInicio = LocalDate.parse(json.getString("fechaInicio"));
+    this.fechaFin = LocalDate.parse(json.getString("fechaFin"));
+}
+
     public static void main(String[] args) {
         // Crear instancias de Vehiculo y Cliente
         Vehiculo vehiculo1 = new VehiculoIndustrial("ABC123", Categoria.SUPERIOR, 2019, 100, 4);
