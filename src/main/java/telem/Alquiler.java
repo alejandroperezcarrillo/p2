@@ -69,20 +69,28 @@ public class Alquiler {
         return new JSONObject(this).toString();
     }
 
+    public int calcularPrecioAlquiler(LocalDate fechaInicio, LocalDate fechaFin, PoliticasDePrecios politica, Vehiculo vehiculo) {
+        ICalculadorPrecio calculador = switch (politica) {
+            case Normal -> new CalculadorPrecioNormal();
+            case TemporadaAlta -> new CalculadorPrecioTemporadaAlta();
+            case Oferton -> new CalculadorPrecioOferton();
+            case ClienteFrecuente -> new CalculadorPrecioClienteFrecuente();
+        };
+        return calculador.calcularPrecioAlquiler(fechaInicio, fechaFin, vehiculo);
+    }
+
     public static void main(String[] args) {
         // Crear instancias de Vehiculo y Cliente
-        Vehiculo vehiculo1 = new Turismo("ABC123", Categoria.NORMAL, 2020, 5, 400.0);
+        Vehiculo vehiculo1 = new VehiculoIndustrial("ABC123", Categoria.SUPERIOR, 2019, 100, 4);
         Cliente cliente1 = new Cliente("Alejandro Pérez", "23313365J");
         LocalDate hoy = LocalDate.now();
-        Alquiler alquiler1 = new Alquiler(vehiculo1, cliente1, hoy, hoy.plusDays(3)); // alquiler de 3 días
 
-        System.out.println(alquiler1.toString());
-        System.out.println("--------------------------------------------------------");
+        Alquiler alquiler1 = new Alquiler(vehiculo1, cliente1, hoy, hoy.plusDays(7)); // alquiler de 7 + 1 = 8 días
 
-        Vehiculo vehiculo2 = new VehiculoIndustrial("ABC123", Categoria.NORMAL, 2020, 1000, 3);
-        Alquiler alquiler2 = new Alquiler(vehiculo2, cliente1, hoy, hoy.plusDays(3)); // alquiler de 3 días
-
-        System.out.println(alquiler2.toString());
-        System.out.println("--------------------------------------------------------");
+        // Probando las diferentes políticas de precios con el patrón Estrategia:
+        System.out.println("Precio Normal: " + alquiler1.calcularPrecioAlquiler(alquiler1.getFechaInicio(), alquiler1.getFechaFin(), PoliticasDePrecios.Normal, vehiculo1));
+        System.out.println("Precio Temporada Alta: " + alquiler1.calcularPrecioAlquiler(alquiler1.getFechaInicio(), alquiler1.getFechaFin(), PoliticasDePrecios.TemporadaAlta, vehiculo1));
+        System.out.println("Precio Ofertón: " + alquiler1.calcularPrecioAlquiler(alquiler1.getFechaInicio(), alquiler1.getFechaFin(), PoliticasDePrecios.Oferton, vehiculo1));
+        System.out.println("Precio Cliente Frecuente: " + alquiler1.calcularPrecioAlquiler(alquiler1.getFechaInicio(), alquiler1.getFechaFin(), PoliticasDePrecios.ClienteFrecuente, vehiculo1));
     }
 }

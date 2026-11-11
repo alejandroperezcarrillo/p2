@@ -7,9 +7,7 @@ public class VehiculoIndustrial extends Vehiculo {
     private int capacidadCarga;
     private int numeroEjes;
 
-    public VehiculoIndustrial(String matricula, Categoria categoria, int annio,
-        int capacidadCarga, int numeroEjes
-    ) {
+    public VehiculoIndustrial(String matricula, Categoria categoria, int annio, int capacidadCarga, int numeroEjes) {
         super(matricula, categoria, annio);
         this.capacidadCarga = capacidadCarga;
         this.numeroEjes = numeroEjes;
