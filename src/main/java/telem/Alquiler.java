@@ -70,28 +70,23 @@ public class Alquiler {
     }
 
     public int calcularPrecioAlquiler(LocalDate fechaInicio, LocalDate fechaFin, PoliticasDePrecios politica, Vehiculo vehiculo) {
-        ICalculadorPrecio calculador = switch (politica) {
-            case Normal -> new CalculadorPrecioNormal();
-            case TemporadaAlta -> new CalculadorPrecioTemporadaAlta();
-            case Oferton -> new CalculadorPrecioOferton();
-            case ClienteFrecuente -> new CalculadorPrecioClienteFrecuente();
-        };
+        ICalculadorPrecio calculador = FactoriaCalculadorPrecio.getCalculador(politica);
         return calculador.calcularPrecioAlquiler(fechaInicio, fechaFin, vehiculo);
     }
 
     public Alquiler(String jsonString) {
-    org.json.JSONObject json = new org.json.JSONObject(jsonString);
-    
-    // Deserializamos el cliente
-    this.cliente = new Cliente(json.getJSONObject("cliente").toString());
-    
-    // Deserializamos el vehículo
-    this.vehiculo = FactoriaVehiculos.getVehiculo(json.getJSONObject("vehiculo").toString());
-    
-    // Deserializamos las fechas
-    this.fechaInicio = LocalDate.parse(json.getString("fechaInicio"));
-    this.fechaFin = LocalDate.parse(json.getString("fechaFin"));
-}
+        org.json.JSONObject json = new org.json.JSONObject(jsonString);
+        
+        // Deserializamos el cliente
+        this.cliente = new Cliente(json.getJSONObject("cliente").toString());
+        
+        // Deserializamos el vehículo
+        this.vehiculo = FactoriaVehiculos.getVehiculo(json.getJSONObject("vehiculo").toString());
+        
+        // Deserializamos las fechas
+        this.fechaInicio = LocalDate.parse(json.getString("fechaInicio"));
+        this.fechaFin = LocalDate.parse(json.getString("fechaFin"));
+    }
 
     public static void main(String[] args) {
         // Crear instancias de Vehiculo y Cliente
